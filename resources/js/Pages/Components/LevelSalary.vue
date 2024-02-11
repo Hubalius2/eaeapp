@@ -1,6 +1,6 @@
 <template>
     <div class="bg-white shadow-md border border-gray-200 py-4 px-4 rounded-lg">
-        <h3 class="pb-3">Salarios / País</h3>
+        <h3 class="pb-3">Salario / Experiencia</h3>
         <BarChart :chartData="chartData" :options="options"  />
     </div>
 </template>
@@ -10,11 +10,10 @@ import { defineComponent, onMounted, ref } from 'vue';
 import { BarChart } from 'vue-chart-3';
 import { Chart, registerables } from "chart.js";
 import axios from 'axios';
-
 Chart.register(...registerables);
 
 export default defineComponent({
-    name: 'CountrySalary',
+    name: 'RemoteRatio',
     components: { BarChart },
     setup() {
 
@@ -28,20 +27,27 @@ export default defineComponent({
 
         const fetchData = async () => {
             try {
-                const response = await axios.get('https://h77v0f7om6.execute-api.us-east-1.amazonaws.com/dev/salaries');
+                const response = await axios.get('https://h77v0f7om6.execute-api.us-east-1.amazonaws.com/dev/salaries/level');
                 const data = JSON.parse(response.data.data);
-                const labels = data.map(item => item.employee_residence);
+                const labels = data.map(item => item.experience_level);
                 const values = data.map(item => item.average_salary);
                 const min = Math.min(...values);
                 const max = Math.max(...values);
                 const colors = values.map(item => numberToColor(item, min, max));
+                const sizes = values.map(item => Math.sqrt(item));
 
                 chartData.value = {
                     labels: labels,
                     datasets: [
                         {
-                            data: values,
+                            label: 'Salarios por Año',
+                            data: values.map((value, index) => ({ x: index, y: value, r: sizes[index] })), // Cada burbuja tiene una coordenada x (index), coordenada y (valor), y tamaño (r)
+                            //backgroundColor: colors
+                            //borderColor:colors,
                             backgroundColor: colors,
+                            borderWidth: 2,
+                            borderRadius: Number.MAX_VALUE,
+                            borderSkipped: false,
                         },
                     ],
                 }
@@ -56,6 +62,7 @@ export default defineComponent({
         });
 
         const options = {
+            indexAxis: 'x',
             plugins: {
                 legend: {
                     display: false

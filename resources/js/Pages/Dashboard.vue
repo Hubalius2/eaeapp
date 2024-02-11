@@ -19,7 +19,7 @@ const handleToggleFileUpload = () => {
     <AppLayout title="Dashboard">
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-                Dashboard
+                Salaries
                 <div class="float-right flex items-center">
                     <span v-if="salaries.length > 0" class="inline-flex items-center rounded-full bg-green-50 px-2 py-1 text-xs font-medium text-green-700 ring-1 ring-inset ring-green-600/20">
                         {{ salaries.length }}
