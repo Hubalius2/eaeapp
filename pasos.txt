@@ -1,0 +1,12 @@
+- Modificar parametros codigo python.
+- Instalar pg8000 en la carpeta del codigo.
+- Archivo zip con la funcion y pg8000
+- Crear funcion lamba en AWS.
+- Subir archivo zip a la funcion.
+- Probar funcion.
+- Crear recurso en la api como desencadenador de la funcion lamda. (Cors Activo)
+- Añadir una etapa get al nuevo recurso.
+- Modificar encabezados para la etapa options y get.
+- Implementar api en la etapa Dev.
+- Probar endpoint del recurso en el navegador.
+- Integrar en la aplicacion de laravel los datos de la consulta.
